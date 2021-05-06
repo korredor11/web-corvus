@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Redirect, Route } from 'react-router-dom'
+import 'antd/dist/antd.css'
+import Login from './pages/Login'
+import CategoriesListing from './pages/categories/CategoriesListing'
+import AuthenticationStore from './stores/AuthenticationStore'
+import MenuLayout from './layouts/MenuLayout'
+import { PrivateRoute } from './utils/PrivateRouteHelper'
+import ProductsListing from './pages/products/ProductsListing'
+import './styles/index.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    return (
+        <AuthenticationStore>
+            <BrowserRouter>
+                <MenuLayout>
+                    <Route path="/" render={() => <Redirect to="/login"/>}/>
+                    <Route path="/login" exact component={Login}/>
+                    <PrivateRoute path={'/categories'} exact component={CategoriesListing}/>
+                    <PrivateRoute path={'/products'} exact component={ProductsListing}/>
+                </MenuLayout>
+            </BrowserRouter>
+        </AuthenticationStore>
+    )
 }
 
-export default App;
+export default App
