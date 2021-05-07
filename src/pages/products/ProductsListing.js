@@ -2,16 +2,19 @@ import { Button, Drawer, PageHeader } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import Search from 'antd/es/input/Search'
 import { useState } from 'react'
+import ProductForm from './ProductForm'
 
 const ProductsListing = (props) => {
     const [visible, setVisible] = useState(false)
+    const [selectedProduct, setSelectedProduct] = useState()
 
     const onSearch = (value) => {
         alert('making search')
     }
 
     const onClose = () => {
-        // TODO
+        setVisible(false)
+        setSelectedProduct(null)
     }
 
     const showDrawer = () => {
@@ -32,7 +35,7 @@ const ProductsListing = (props) => {
 
             <Drawer title={'Formulario Productos'} placement={'right'} closable={false} onClose={onClose}
                     visible={visible} width={450}>
-                <h1>Form...</h1>
+                <ProductForm />
             </Drawer>
 
         </PageHeader>

@@ -2,9 +2,8 @@ import { Card, Input, Form, Checkbox, Button, message } from 'antd'
 import { AuthenticationContext } from '../stores/AuthenticationStore'
 import { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { authenticate } from '../services/AuthService'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import axios from 'axios'
+import api from '../utils/api'
 
 const Login = () => {
     const [authentication, setAuthentication] = useContext(AuthenticationContext)
@@ -25,20 +24,17 @@ const Login = () => {
 
 
     const onFinish = (values) => {
-        axios.post('http://localhost:8080/login', {
-            name: values.username,
-            password: values.password,
-        })
+        api.post('/login', { name: values.username, password: values.password })
             .then(response => {
-                if (!response.data.token) return
-
+                console.log(response)
+                if (!response.token) return
                 if (values.remember) saveUsername(values.username)
                 else clearUsername()
 
-                setAuthentication({ ...authentication, token: response.data.token })
+                setAuthentication({ ...authentication, token: response.token })
                 history.push('/home')
             })
-            .catch(err => message.error(err.response.data.message))
+            .catch(err => message.error(err.message))
     }
 
     return (
