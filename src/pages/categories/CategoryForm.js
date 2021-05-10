@@ -1,15 +1,14 @@
-import { Button, Form, Input, message, PageHeader } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 import { api } from '../../utils/api'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 const CategoryForm = ({ category, onSuccess }) => {
     const [categoryForm] = Form.useForm()
 
     const onFinish = (values) => {
         const formCategory = { id: category && category.id ? category.id : 0, name: values.name }
-        const method = category ? 'PUT' : 'POST'
-
-        api(method, '/categories', formCategory)
+        const request = category ? api.put('/categories', formCategory) : api.post('/categories', formCategory)
+        request
             .then(response => {
                 message.success('La categoria fue salva con suceso!')
                 categoryForm.resetFields()

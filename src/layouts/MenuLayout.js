@@ -1,15 +1,8 @@
-import { Button, Layout, Menu } from 'antd'
+import { Layout, Menu } from 'antd'
 import { useContext, useEffect, useState } from 'react'
-import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import {
-    BarcodeOutlined,
-    LogoutOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    RightOutlined,
-    TagsOutlined,
-} from '@ant-design/icons'
-import { DiDigitalOcean, FaCog, IoCogOutline } from 'react-icons/all'
+import { NavLink, useLocation } from 'react-router-dom'
+import { BarcodeOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, TagsOutlined } from '@ant-design/icons'
+import { DiDigitalOcean, FaCog } from 'react-icons/all'
 import MenuItem from 'antd/es/menu/MenuItem'
 import { AuthenticationContext } from '../stores/AuthenticationStore'
 
@@ -28,7 +21,7 @@ const MenuLayout = ({ children }) => {
     const location = useLocation()
     const [selectedKey, setSelectedKey] = useState(location.pathname)
     const [collapsed, setCollapsed] = useState(false)
-    const [authentication, setAuthentication] = useContext(AuthenticationContext)
+    const [, setAuthentication] = useContext(AuthenticationContext)
 
     const toggle = () => setCollapsed(!collapsed)
 
@@ -96,7 +89,7 @@ const MenuLayout = ({ children }) => {
                 <Content
                     className="site-layout-background"
                     style={{
-                        margin: '24px 16px',
+                        margin: '0px 16px',
                         padding: 24,
                         height: '100%',
                     }}

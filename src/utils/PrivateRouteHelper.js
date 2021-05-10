@@ -3,7 +3,7 @@ import { AuthenticationContext } from '../stores/AuthenticationStore'
 import { Redirect, Route } from 'react-router-dom'
 
 export const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-    const [state, setState] = useContext(AuthenticationContext)
+    const [state] = useContext(AuthenticationContext)
     return (
         <Route
             {...rest}

@@ -3,7 +3,7 @@ import { AuthenticationContext } from '../stores/AuthenticationStore'
 import { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import api from '../utils/api'
+import { api } from '../utils/api'
 
 const Login = () => {
     const [authentication, setAuthentication] = useContext(AuthenticationContext)
@@ -22,20 +22,30 @@ const Login = () => {
         localStorage.removeItem('login-username')
     }
 
+    const enterApp = (token) => {
+        setAuthentication({ ...authentication, token: token })
+        history.push('/home')
+    }
+
 
     const onFinish = (values) => {
         api.post('/login', { name: values.username, password: values.password })
             .then(response => {
-                console.log(response)
                 if (!response.token) return
                 if (values.remember) saveUsername(values.username)
                 else clearUsername()
-
-                setAuthentication({ ...authentication, token: response.token })
-                history.push('/home')
+                localStorage.setItem('token', response.token)
+                enterApp(response.token)
             })
             .catch(err => message.error(err.message))
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (storedUsername() && token) {
+            enterApp(token)
+        }
+    })
 
     return (
         <div style={{

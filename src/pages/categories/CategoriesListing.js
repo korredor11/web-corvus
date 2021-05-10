@@ -1,10 +1,8 @@
-import { Link } from 'react-router-dom'
-import { Button, Drawer, message, Table, Input, PageHeader } from 'antd'
+import { Button, Drawer, Input, message, PageHeader, Table } from 'antd'
 import { useEffect, useState } from 'react'
 import CategoryForm from './CategoryForm'
 import { EditOutlined, PlusOutlined } from '@ant-design/icons'
-import { BiPencil } from 'react-icons/all'
-import api from '../../utils/api'
+import { api } from '../../utils/api'
 
 const { Search } = Input
 
@@ -32,7 +30,10 @@ const CategoriesListing = (props) => {
         onClose()
     }
 
-    const fetchData = filter => {
+    const fetchData = () => {
+        console.log('fetching categories...')
+        console.log('categories=', categories)
+        console.log('filterdCategories=', filteredCategories)
         api.get('/categories')
             .then(response => setCategories(response))
             .catch(err => message.error(err.message))
@@ -41,8 +42,9 @@ const CategoriesListing = (props) => {
     const filteredCategories = categories.filter(category => category.name.includes(search))
 
     useEffect(() => {
-        fetchData('')
-    })
+        fetchData()
+        // eslint-disable-next-line
+    }, [])
 
 
     const columns = [
