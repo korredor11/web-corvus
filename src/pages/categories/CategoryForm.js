@@ -7,7 +7,7 @@ const CategoryForm = ({ category, onSuccess }) => {
 
     const onFinish = (values) => {
         const formCategory = { id: category && category.id ? category.id : 0, name: values.name }
-        const request = category ? api.put('/categories', formCategory) : api.post('/categories', formCategory)
+        const request = category ? api.put('/categories/'+category.id, formCategory) : api.post('/categories', formCategory)
         request
             .then(response => {
                 message.success('La categoria fue salva con suceso!')

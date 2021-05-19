@@ -3,10 +3,11 @@ import { history } from './history'
 import { message } from 'antd'
 
 const getAuthToken = () => localStorage.getItem('authToken')
+// const getAuthToken = () => '123'
 const clearAuthToken = () => localStorage.removeItem('authToken')
 
 const defaults = {
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://127.0.0.1:3000',
     headers: () => ({
         'Content-Type': 'application/json',
         'Authorization': getAuthToken() ? `Bearer ${getAuthToken()}` : undefined,
